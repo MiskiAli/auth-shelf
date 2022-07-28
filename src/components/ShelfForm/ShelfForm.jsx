@@ -7,11 +7,11 @@ export default function ShelfForm() {
     const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
-        console.log('here is the new item', description, image_url);
+        console.log('here is the new item', description, image_url, user_id);
         event.preventDefault();
         dispatch({
             type: 'POST_ITEM',
-            payload: { description, image_url },
+            payload: { description, image_url, user_id },
         });
         setDescription('');
         setImage_Url('');

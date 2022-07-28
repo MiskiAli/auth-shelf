@@ -1,10 +1,12 @@
+
 const itemReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_ITEM':
             console.log(`Our items are:`, action.payload);
             return action.payload;
-        case 'DELETE_ITEM':
-            return [];
+        // case 'DELETE_ITEM':
+        //     const newState = state.filter((todo) => todo.id !== action.id);
+        //     return newState;
         default:
             return state;
     }
