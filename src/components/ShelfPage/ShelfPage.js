@@ -10,40 +10,29 @@ function ShelfPage() {
         dispatch({ type: 'FETCH_ITEM' });
     }, []);
 
-    const handleDelete = (event) => {
-        // console.log(
-        //     `You clicked the delete button on this item: ${item}`
-        // );
+    const handleDelete = (id) => {
         event.preventDefault();
-        dispatch({
-            type: 'DELETE_ITEM',
-            // payload: { description, image_url, user_id },
-            payload: id
-        });
-    };
+        console.log(
+                'You clicked the delete button on this item', id);
+            // dispatch({
+            //     type: 'DELETE_ITEM',
+            //     // payload: { description, image_url, user_id },
+            //     payload: id  });
+                }
 
-    const handleSubmit = (event) => {
-        console.log('here is the new item', description, image_url);
-        event.preventDefault();
-        dispatch({
-            type: 'POST_ITEM',
-            payload: { description, image_url},
-        });
-        setDescription('');
-        setImage_Url('');
-    };
+    
     return (
         <div className="container">
             <h2>Shelf</h2>
             <ShelfForm />
             <p>All of the available items can be seen here.</p>
             <ul>
-                {items.map((item, i) => {
+                {items.map((item, id) => {
                     return (
-                        <li key={i}>
+                        <li key={id}>
                             <img src={item.image_url} />
                             {item.description}{' '}
-                            <button onClick={handleDelete}>Delete</button>
+                            <button onClick={handleDelete(item.id)}>Delete</button>
                         </li>
                     );
                 })}
