@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ShelfForm from '../ShelfForm/ShelfForm';
+import ShelfDelete from '../ShelfDelete/ShelfDelete';
 
 function ShelfPage() {
     const items = useSelector((store) => store.item);
@@ -10,15 +11,6 @@ function ShelfPage() {
         dispatch({ type: 'FETCH_ITEM' });
     }, []);
 
-    const handleDelete = (id) => {
-        event.preventDefault();
-        console.log(
-                'You clicked the delete button on this item', id);
-            // dispatch({
-            //     type: 'DELETE_ITEM',
-            //     // payload: { description, image_url, user_id },
-            //     payload: id  });
-                }
 
     
     return (
@@ -27,13 +19,10 @@ function ShelfPage() {
             <ShelfForm />
             <p>All of the available items can be seen here.</p>
             <ul>
-                {items.map((item, id) => {
+                {items.map((item) => {
                     return (
-                        <li key={id}>
-                            <img src={item.image_url} />
-                            {item.description}{' '}
-                            <button onClick={handleDelete(item.id)}>Delete</button>
-                        </li>
+                        <ShelfDelete key={item.id} item={item}/>
+
                     );
                 })}
             </ul>
