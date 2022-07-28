@@ -1,47 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 export default function ShelfForm() {
     const [description, setDescription] = useState('');
-    const [url, setUrl] = useState('');
+    const [image_url, setImage_Url] = useState('');
     const dispatch = useDispatch();
-    
-
-    
 
     const handleSubmit = (event) => {
-        console.log('here is the new item', description, url);
+        console.log('here is the new item', description, image_url);
         event.preventDefault();
         dispatch({
             type: 'POST_ITEM',
-            payload: { description, url },
+            payload: { description, image_url },
         });
-        setDescription('')
-        setUrl('')
-    }
-
-    
+        setDescription('');
+        setImage_Url('');
+    };
 
     return (
         <div>
             <div>ShelfForm</div>
             <form onSubmit={handleSubmit}>
                 <input
-                    
                     type="text"
                     placeholder="description"
                     value={description}
                     onChange={(event) => setDescription(event.target.value)}
                 />
-                <input 
-                    
+                <input
                     type="text"
                     placeholder="url"
-                    value={url}
-                    onChange={(event) => setUrl(event.target.value)}
+                    value={image_url}
+                    onChange={(event) => setImage_Url(event.target.value)}
                 />
-                <button type="submit" onClick={handleSubmit}>Add Item</button>
+                <button type="submit" onClick={handleSubmit}>
+                    Add Item
+                </button>
             </form>
         </div>
     );
