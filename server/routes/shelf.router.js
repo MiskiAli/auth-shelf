@@ -30,6 +30,19 @@ router.get('/', (req, res) => {
  */
 router.post('/', (req, res) => {
     // endpoint functionality
+    const item = req.body;
+    const queryText = `insert into "item" ("description", "image_url")
+    values ($1, $2);`;
+    //databse columns have to match redux object from dispatch payload (ShelfForm.jsx)
+    pool.query(queryText, [item.description, item.image_url])
+        .then((result) => {
+            res.send(result.rows);
+            console.log(`POST successful:`, result.rows);
+        })
+        .catch((err) => {
+            console.log(`ERR in /shelf router`, err);
+            res.sendStatus(500);
+        });
 });
 
 /**
