@@ -22,6 +22,19 @@ function* postShelfForm(action) {
     }
 }
 
+// DELETE Item
+function* deleteItem(action) { 
+    try {
+        const id = action.payload
+        console.log('DELETE item is:', action.payload);
+        const product = yield axios.delete('/api/shelf', {id});
+        yield put({ type: 'FETCH_ITEM'});
+    } catch (error) {
+        console.log("ERR with deleteItem:", error);
+        
+    }
+}
+
 function* itemSaga() {
     yield takeEvery('FETCH_ITEM', fetchItem);
     yield takeEvery('POST_ITEM', postShelfForm);

@@ -10,6 +10,28 @@ function ShelfPage() {
         dispatch({ type: 'FETCH_ITEM' });
     }, []);
 
+    const handleDelete = (event) => {
+        // console.log(
+        //     `You clicked the delete button on this item: ${item}`
+        // );
+        event.preventDefault();
+        dispatch({
+            type: 'DELETE_ITEM',
+            // payload: { description, image_url, user_id },
+            payload: id
+        });
+    };
+
+    const handleSubmit = (event) => {
+        console.log('here is the new item', description, image_url);
+        event.preventDefault();
+        dispatch({
+            type: 'POST_ITEM',
+            payload: { description, image_url},
+        });
+        setDescription('');
+        setImage_Url('');
+    };
     return (
         <div className="container">
             <h2>Shelf</h2>
@@ -20,7 +42,8 @@ function ShelfPage() {
                     return (
                         <li key={i}>
                             <img src={item.image_url} />
-                            {item.description}
+                            {item.description}{' '}
+                            <button onClick={handleDelete}>Delete</button>
                         </li>
                     );
                 })}
