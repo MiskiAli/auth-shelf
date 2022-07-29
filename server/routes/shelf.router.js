@@ -51,10 +51,11 @@ router.post('/', (req, res) => {
 router.delete('/:id', (req, res) => {
     if (req.isAuthenticated()){
     // endpoint functionality
-    const userId = req.params.id;
-    const queryText = `delete from "item" where id = $1;`;
+    const id = req.params.id;
+    const userId = req.user.id;
+    const queryText = `DELETE from "item" where "id" = $1 and "user_id" = $2;`;
     //databse columns have to match redux object from dispatch payload (ShelfForm.jsx)
-    pool.query(queryText, [userId,])
+    pool.query(queryText, [id, userId])
         .then((result) => {
             res.send(result.rows);
             console.log(`POST successful:`, result.rows);
