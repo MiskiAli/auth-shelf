@@ -31,10 +31,10 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     // endpoint functionality
     const item = req.body;
-    const queryText = `insert into "item" ("description", "image_url")
-    values ($1, $2);`;
+    const queryText = `insert into "item" ("description", "image_url","user_id")
+    values ($1, $2, $3);`;
     //databse columns have to match redux object from dispatch payload (ShelfForm.jsx)
-    pool.query(queryText, [item.description, item.image_url])
+    pool.query(queryText, [item.description, item.image_url, item.user_id])
         .then((result) => {
             res.send(result.rows);
             console.log(`POST successful:`, result.rows);
@@ -49,11 +49,13 @@ router.post('/', (req, res) => {
  * Delete an item if it's something the logged in user added
  */
 router.delete('/:id', (req, res) => {
+    if (req.isAuthenticated()){
     // endpoint functionality
-    const userId = req.params.id;
-    const queryText = `delete from "item" where id = $1;`;
+    const id = req.params.id;
+    const userId = req.user.id;
+    const queryText = `DELETE from "item" where "id" = $1 and "user_id" = $2;`;
     //databse columns have to match redux object from dispatch payload (ShelfForm.jsx)
-    pool.query(queryText, [userId])
+    pool.query(queryText, [id, userId])
         .then((result) => {
             res.send(result.rows);
             console.log(`POST successful:`, result.rows);
@@ -62,6 +64,9 @@ router.delete('/:id', (req, res) => {
             console.log(`ERR in /shelf router`, err);
             res.sendStatus(500);
         });
+    } {
+        res.sendStatus(403);
+    }
 });
 
 /**
