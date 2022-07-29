@@ -4,14 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function ShelfForm() {
     const [description, setDescription] = useState('');
     const [image_url, setImage_Url] = useState('');
+
+    const user = useSelector(store => store.user);
+    const user_id = user.id;
+
     const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
-        console.log('here is the new item', description, image_url);
+        console.log('here is the new item', description, image_url, user_id);
         event.preventDefault();
         dispatch({
             type: 'POST_ITEM',
-            payload: { description, image_url },
+            payload: { description, image_url, user_id },
         });
         setDescription('');
         setImage_Url('');

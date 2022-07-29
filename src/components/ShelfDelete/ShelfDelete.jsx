@@ -1,20 +1,29 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+
 
 
 function ShelfDelete({item}) {
 
     const dispatch = useDispatch();
 
+    const user = useSelector(store => store.user);
+    const user_id = user.id;
+
 
     const handleDelete = (id) => {
 
         console.log(
             'You clicked the delete button on this item', id);
-        dispatch({
-            type: 'DELETE_ITEM',
-            payload: id
-        });
+        if (user_id === item.user_id){
+            dispatch({
+                type: 'DELETE_ITEM',
+                payload: id
+            });
+        }else{
+            alert('ERRRRROR NO WAY BRO ::: DENIED ::: YOU HAVE NOT ACCESS :::');
+        }
     }
 
 
