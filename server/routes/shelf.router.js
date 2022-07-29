@@ -64,7 +64,7 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
             console.log(`ERR in /shelf router`, err);
             res.sendStatus(500);
         });
-    } {
+    } else {
         res.sendStatus(403);
     }
 });
